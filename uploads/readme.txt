@@ -1,0 +1,1 @@
+**This folder stores all media uploaded by the user**

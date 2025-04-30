@@ -3,16 +3,15 @@ const multer = require('multer');
 const db = require('../db');
 const router = express.Router();
 
-// Middleware to check if user is logged in
+
 function checkLogin(req, res, next) {
     if (!req.session.userId) {
-        req.session.redirectTo = req.originalUrl; // Save the intended route
-        return res.redirect('/login');  // Redirect to login if user is not logged in
+        req.session.redirectTo = req.originalUrl;
+        return res.redirect('/login');
     }
-    next();  // Proceed if the user is logged in
+    next();
 }
 
-// Set up multer storage
 const storage = multer.diskStorage({
     destination: './uploads/',
     filename: (req, file, cb) => {
@@ -22,12 +21,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Function to link hashtags
 function linkHashtags(text) {
     return text.replace(/#(\w+)/g, '<a href="/posts/hashtag/$1">#$1</a>');
 }
 
-// Create Post
 router.post('/create', checkLogin, upload.single('media'), (req, res) => {
     const { caption, tags } = req.body;
     const userId = req.session.userId;
@@ -39,11 +36,10 @@ router.post('/create', checkLogin, upload.single('media'), (req, res) => {
             console.error("Error inserting post: ", err);
             return res.status(500).send('Error creating post');
         }
-        res.redirect('/feed');  // Redirect to feed after post creation
+        res.redirect('/feed');
     });
 });
 
-// View Feed (updated to include comments and link hashtags)
 router.get('/feed', checkLogin, (req, res) => {
     const postQuery = `
         SELECT posts.*, users.username 
@@ -64,12 +60,10 @@ router.get('/feed', checkLogin, (req, res) => {
         db.query(commentQuery, (err, comments) => {
             if (err) throw err;
 
-            // Attach comments to their respective posts
             posts.forEach(post => {
                 post.comments = comments.filter(comment => comment.postId === post.id);
             });
 
-            // Pass the posts with their attached comments and the linkHashtags function to the view
             res.render('feed', {
                 username: req.session.username,
                 posts,
@@ -79,7 +73,6 @@ router.get('/feed', checkLogin, (req, res) => {
     });
 });
 
-// Like Post
 router.post('/like', checkLogin, (req, res) => {
     const userId = req.session.userId;
     const postId = req.body.postId;
@@ -87,7 +80,7 @@ router.post('/like', checkLogin, (req, res) => {
     const query = 'INSERT INTO likes (user_id, post_id) VALUES (?, ?)';
     db.query(query, [userId, postId], (err) => {
         if (err) throw err;
-        res.redirect('/feed');  // Redirect back to feed after liking a post
+        res.redirect('/feed');
     });
 });
 
@@ -108,20 +101,18 @@ router.get('/like-count/:id', (req, res) => {
   
   router.post('/toggle-like/:postId', (req, res) => {
     const postId = req.params.postId;
-    const userId = req.session.userId; // Make sure user is logged in
+    const userId = req.session.userId;
   
     const checkQuery = 'SELECT * FROM likes WHERE post_id = ? AND user_id = ?';
     db.query(checkQuery, [postId, userId], (err, result) => {
       if (err) return res.status(500).json({ error: 'DB error' });
   
       if (result.length > 0) {
-        // Already liked – remove it
         db.query('DELETE FROM likes WHERE post_id = ? AND user_id = ?', [postId, userId], err2 => {
           if (err2) return res.status(500).json({ error: 'Error removing like' });
           res.json({ liked: false });
         });
       } else {
-        // Not liked yet – insert
         db.query('INSERT INTO likes (post_id, user_id) VALUES (?, ?)', [postId, userId], err2 => {
           if (err2) return res.status(500).json({ error: 'Error adding like' });
           res.json({ liked: true });
@@ -129,8 +120,7 @@ router.get('/like-count/:id', (req, res) => {
       }
     });
   });
-  
-// Comment on Post
+
 router.post('/comment', checkLogin, (req, res) => {
     const userId = req.session.userId;
     const { postId, comment } = req.body;
@@ -139,7 +129,7 @@ router.post('/comment', checkLogin, (req, res) => {
     db.query(query, [userId, postId, comment], (err) => {
         if (err) throw err;
 
-        // After adding the comment, fetch the updated comment data
+
         const commentQuery = `
             SELECT comments.comment, users.username 
             FROM comments 
@@ -153,7 +143,6 @@ router.post('/comment', checkLogin, (req, res) => {
     });
 });
 
-// Get posts by hashtag
 router.get('/posts/hashtag/:tag', checkLogin, (req, res) => {
     const tag = req.params.tag;
 
@@ -185,13 +174,12 @@ router.get('/posts/hashtag/:tag', checkLogin, (req, res) => {
                 tag, 
                 posts, 
                 username: req.session.username,
-                linkHashtags // Pass it to EJS
+                linkHashtags 
             });
         });
     });
 });
 
-//view myposts
 router.get('/myposts', checkLogin, (req, res) => {
     const userId = req.session.userId;
 
@@ -222,7 +210,7 @@ router.get('/myposts', checkLogin, (req, res) => {
             res.render('myposts', {
                 username: req.session.username,
                 posts,
-                linkHashtags // only if you're using hashtag parsing
+                linkHashtags
             });
         });
     });
@@ -236,21 +224,19 @@ router.post('/delete-post/:id', (req, res) => {
           console.error('Error deleting likes:', err);
           return res.status(500).send('Error deleting likes');
         }
-    
-        // Then, delete comments associated with the post
+
         db.query('DELETE FROM comments WHERE post_id = ?', [postId], (err, result) => {
           if (err) {
             console.error('Error deleting comments:', err);
             return res.status(500).send('Error deleting comments');
           }
-    
-          // Finally, delete the post
+
           db.query('DELETE FROM posts WHERE id = ?', [postId], (err, result) => {
             if (err) {
               console.error('Error deleting post:', err);
               return res.status(500).send('Error deleting post');
             }
-            res.redirect('/myposts'); // or wherever you list the posts
+            res.redirect('/myposts');
           });
         });
       });

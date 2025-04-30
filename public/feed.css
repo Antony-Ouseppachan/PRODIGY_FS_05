@@ -32,7 +32,7 @@ h1 {
     border: 1px solid #e0c3fc;
     box-shadow: 0 0 20px rgba(164, 86, 255, 0.2);
     overflow: hidden;
-    transition: all 0.3s ease-in-out;  /* Smooth transition for all properties */
+    transition: all 0.3s ease-in-out;
 }
 
 .modal img {
@@ -41,11 +41,11 @@ h1 {
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(166, 108, 255, 0.1);
-    transition: transform 0.3s ease-in-out;  /* Smooth zoom effect */
+    transition: transform 0.3s ease-in-out;
 }
 
 .modal img:hover {
-    transform: scale(1.05);  /* Prevent any jitter from the hover */
+    transform: scale(1.05);
 }
 
 .modal-title {
@@ -148,7 +148,7 @@ textarea.form-control {
     border-radius: 12px;
     margin: 10px 0;
     box-shadow: 0 4px 10px rgba(166, 108, 255, 0.1);
-    transition: transform 0.3s ease-in-out;  /* Added transition */
+    transition: transform 0.3s ease-in-out;
 }
 
 .post img:hover {

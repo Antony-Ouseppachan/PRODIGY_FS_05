@@ -34,7 +34,6 @@
 </header>
 
 <body>
-    <!-- Create Post -->
     <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -94,7 +93,6 @@
     <% } %>
 </div>
 
-<!-- View Post -->
 <% posts.forEach(post => { %>
     <div class="modal fade" id="postModal-<%= post.id %>" tabindex="-1" aria-labelledby="postModalLabel-<%= post.id %>" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -117,9 +115,7 @@
                         <textarea class="form-control mb-2" name="comment" placeholder="Add a comment" required></textarea>
                         <button type="submit" class="btn btn-primary">Comment</button>
                     </form>
-                    
-                    
-                    <!-- Container to display comments -->
+
                     <div id="commentsContainer">
                         <% if (post.comments && post.comments.length > 0) { %>
                             <% post.comments.forEach(comment => { %>

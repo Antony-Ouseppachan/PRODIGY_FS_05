@@ -85,8 +85,7 @@
                             <textarea class="form-control mb-2" name="comment" placeholder="Add a comment" required></textarea>
                             <button type="submit" class="btn btn-primary">Comment</button>
                         </form>
-                        
-                        <!-- Container to display comments -->
+
                         <div id="commentsContainer">
                             <% if (post.comments && post.comments.length > 0) { %>
                                 <% post.comments.forEach(comment => { %>

@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(session({
-    secret: 'cce178320990f0261dd15e62866ff39f579b2c7d083f18f6762393f2eee0c2c5f7031118c82c33e43f5c2e0f4dce70b9c78c8145e63656d7cdaa24bb849b5faf',
+    secret: 'YOUR_KEY',
     resave: false,
     saveUninitialized: true
 }));

@@ -79,6 +79,3 @@ This project is licensed under the [MIT LICENSE](LICENSE).
 
 GitHub Profile: [Antony-Ouseppachan](https://github.com/Antony-Ouseppachan)
 
-```
-
-Let me know if you'd like me to add a `CONTRIBUTING.md` or SQL schema section too!

@@ -1,0 +1,273 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header{
+    margin-bottom: 100px;
+}
+h1 {
+    text-align: center;
+    color: #6f42c1;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    background-color: #a66cff;
+    border-color: #a66cff;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #933bfa;
+    border-color: #933bfa;
+}
+
+.modal-content {
+    border-radius: 16px;
+    background: #fff0fe;
+    border: 1px solid #e0c3fc;
+    box-shadow: 0 0 20px rgba(164, 86, 255, 0.2);
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;  /* Smooth transition for all properties */
+}
+
+.modal img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(166, 108, 255, 0.1);
+    transition: transform 0.3s ease-in-out;  /* Smooth zoom effect */
+}
+
+.modal img:hover {
+    transform: scale(1.05);  /* Prevent any jitter from the hover */
+}
+
+.modal-title {
+    color: #a66cff;
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #d2a2ff;
+}
+
+.form-control:focus {
+    border-color: #a66cff;
+    box-shadow: 0 0 8px rgba(166, 108, 255, 0.4);
+}
+
+.feed .card {
+    background: #ffffff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(164, 86, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: #a66cff;
+    font-size: 1.25rem;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.btn-outline-primary {
+    color: #a66cff;
+    border-color: #a66cff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #a66cff;
+    color: white;
+}
+
+a.btn-link {
+    color: #8a4fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a.btn-link:hover {
+    color: #6f42c1;
+    text-decoration: underline;
+}
+
+textarea.form-control {
+    resize: none;
+}
+
+.feed {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.post {
+  position: relative;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.post:hover {
+    border: 1px solid white;
+    box-shadow: 0 0 100px white;
+}
+
+.post h2 {
+    color: #a66cff;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.post p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.post img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 10px 0;
+    box-shadow: 0 4px 10px rgba(166, 108, 255, 0.1);
+    transition: transform 0.3s ease-in-out;  /* Added transition */
+}
+
+.post img:hover {
+    transform: scale(1.02);
+}
+
+
+.post form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.post button {
+    background-color: #d3a0ff;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.post button:hover {
+    background-color: #b66bff;
+}
+
+.post a {
+    color: #8a4fff;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.post a:hover {
+    color: #6f42c1;
+    text-decoration: underline;
+}
+
+.btn-outline-danger {
+    border-color: #ff4f81;
+    color: #ff4f81;
+    background-color: white;
+}
+
+.btn-outline-danger:hover {
+    background-color: #ff4f81;
+    color: white;
+}
+
+.hashtag-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+    border-radius: 8px;
+    margin-top: 100px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hashtag-header span {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.logo-section {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    z-index: 1000;
+    background-color: transparent;
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 16px 32px 64px rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+}
+
+.welcome-head {
+    position: absolute;
+    top: 47px;
+    left: 250px;
+    z-index: 1000;
+}
+
+.button-head {
+    position: absolute;
+  top: 47px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 20px;
+  }
+  
+  .delete-button-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .delete-button-form button {
+    padding: 5px 8px;
+    font-size: 14px;
+    border-radius: 50%;
+    border: none;
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+  }
+
+  .delete-button-form i {
+    font-size: 35px;
+  }
+  
+  .delete-button-form button i {
+    pointer-events: none;
+  }

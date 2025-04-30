@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snappin - Feed</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css"    rel="stylesheet"  />
+    <link    rel="stylesheet"    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+    <link href="feed.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+</head>
+<header>    
+    <div class="d-flex justify-content-between align-items-center px-4 pt-4">
+        <div class="logo-section">
+            <a href="/feed">
+            <img class="logo" src="/media/logo.png" alt="Logo">
+        </a>
+        </div>
+        <h1 class="welcome-head">Welcome, <%= username %></h1>
+        
+        <div class="button-head">
+
+            <a href="/myposts" class="btn btn-outline-secondary" style="background-color: rgb(126, 0, 126);color: white;font-weight: bold;border-radius: 20px;">My Posts</a>
+            <button type="button" class="btn btn-primary btn-floating" data-bs-toggle="modal" data-bs-target="#postModal">
+                <i class="fas fa-plus"></i>
+              </button>
+            <form action="/logout" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<body>
+    <!-- Create Post -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/create" method="POST" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="postModalLabel">Create a Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="caption" placeholder="What's on your mind?" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="tags" placeholder="Tags">
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" name="media">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<div class="container mt-4">
+    <h2 class="hashtag-header">My Posts</h2>
+    <% if (posts.length === 0) { %>
+        <p>You haven't posted anything yet.</p>
+    <% } else { %>
+        <% posts.forEach(post => { %>
+            <div class="post">
+                <h2><%= post.username %></h2>
+                <form class="delete-button-form" action="/delete-post/<%= post.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                    <button class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                </form>
+                <p><%= post.caption %></p>
+                <% if (post.media) { %>
+                    <img src="/uploads/<%= post.media %>" alt="Post Media" width="200">
+                <% } %>
+                <p><strong>Tags:</strong> <%- linkHashtags(post.tags || '') %></p>
+                <button class="like-btn" onclick="toggleLike(<%= post.id %>)">
+                    <i id="thumb-<%= post.id %>" class="far fa-thumbs-up"></i>
+                    <span id="count-<%= post.id %>">0</span>
+                </button>   
+
+                <button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#postModal-<%= post.id %>">
+                    View Post
+                </button>
+
+            </div>
+        <% }) %>
+    <% } %>
+</div>
+
+<!-- View Post -->
+<% posts.forEach(post => { %>
+    <div class="modal fade" id="postModal-<%= post.id %>" tabindex="-1" aria-labelledby="postModalLabel-<%= post.id %>" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel-<%= post.id %>"><%= post.username %>'s Post</h5>
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><%= post.caption %></p>
+                    <% if (post.media) { %>
+                        <img src="/uploads/<%= post.media %>" class="img-fluid mb-3" alt="Post Media">
+                    <% } %>
+                    <p><strong>Tags:</strong> <%- linkHashtags(post.tags || '') %></p>
+
+                    <h5 class="mt-4">Comments</h5>
+                    <form action="/comment" method="POST" class="mb-3">
+                        <input type="hidden" name="postId" value="<%= post.id %>">
+                        <textarea class="form-control mb-2" name="comment" placeholder="Add a comment" required></textarea>
+                        <button type="submit" class="btn btn-primary">Comment</button>
+                    </form>
+                    
+                    
+                    <!-- Container to display comments -->
+                    <div id="commentsContainer">
+                        <% if (post.comments && post.comments.length > 0) { %>
+                            <% post.comments.forEach(comment => { %>
+                                <div><strong><%= comment.username %></strong>: <%= comment.comment %></div>
+                            <% }) %>
+                        <% } else { %>
+                            <div>No comments yet.</div>
+                        <% } %>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</body>
+
+<script src="script.js"></script>
+</html>

@@ -1,0 +1,13 @@
+<h2>Profile of <%= username %></h2>
+<a href="/feed">Back to Feed</a>
+<div class="profile-posts">
+    <% posts.forEach(post => { %>
+        <div class="post">
+            <% if (post.media) { %>
+                <img src="/uploads/<%= post.media %>" width="200" />
+            <% } %>
+            <p><%= post.caption %></p>
+            <p>Tags: <%= post.tags %></p>
+        </div>
+    <% }) %>
+</div>
